@@ -3,10 +3,11 @@ import urllib.request
 import threading
 import hvac
 
+default_vault_address = os.getenv('VAULT_ADDR', 'http://127.0.0.1:8200')
+
 
 class Vault:
-
-    vault_server = os.getenv('VAULT_ADDR')
+    vault_server = default_vault_address
     connection_mode = 'token'
 
     _client = None
@@ -22,7 +23,7 @@ class Vault:
                     Vault._instance = super(Vault, cls).__new__(cls, **kwargs)
         return Vault._instance
 
-    def __init__(self, server=os.getenv('VAULT_ADDR'), connection_mode='token', client=None, **kwargs):
+    def __init__(self, server=default_vault_address, connection_mode='token', client=None, **kwargs):
         self.connection_mode = connection_mode
         self.vault_server = server
         self.parameters = kwargs
@@ -32,18 +33,22 @@ class Vault:
     def client(self):
         if self._client.is_authenticated():
             return self._client
+        elif self._client is not None:
+            # noinspection PyBroadException
+            try:
+                self._client.close()
+            except:
+                pass
 
         client = hvac.Client(url=self.vault_server)
         if self.connection_mode == 'token':
             client.token = self.parameters['token']
         elif self.connection_mode == 'ec2':
-            contents = urllib.request.urlopen('http://169.254.169.254/latest/dynamic/instance-identity/pkcs7').read()\
+            contents = urllib.request.urlopen('http://169.254.169.254/latest/dynamic/instance-identity/pkcs7').read() \
                 .replace('\n', '')
             client.auth_ec2(contents, nonce=self.parameters['nonce'], role=self.parameters['role'], mount_point='aws')
         else:
             getattr(client, 'auth_' + self.connection_mode)(**self.parameters)
-
-        client.auth_userpass()
 
         self._client = client
         return self._client

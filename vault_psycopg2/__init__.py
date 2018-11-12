@@ -1,24 +1,12 @@
-import threading
-
 import psycopg2
 
 
 class VaultPsycopg:
-    _instance = None
-    _lock = threading.Lock()
     _vault_wrapper = None
-
     _database_connection = None
 
     database_config = {}
     vault_config = {}
-
-    def __new__(cls, **kwargs):
-        if VaultPsycopg._instance is None:
-            with VaultPsycopg._lock:
-                if VaultPsycopg._instance is None:
-                    VaultPsycopg._instance = super(VaultPsycopg, cls).__new__(cls, **kwargs)
-        return VaultPsycopg._instance
 
     def __init__(self, database_config=None, vault_config=None):
         self.vault_config = vault_config
@@ -29,7 +17,6 @@ class VaultPsycopg:
 
     @property
     def connection(self):
-
         if self._database_connection:
             try:
                 cursor = self._database_connection.cursor()
