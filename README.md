@@ -29,7 +29,6 @@ vp = VaultPsycopg(
 
 # An instance of psycopg2.connection that is properly authenticated
 vp.connection
-
 ```
 
 ##### Other examples of vault config:
