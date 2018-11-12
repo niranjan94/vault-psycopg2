@@ -15,7 +15,11 @@ setup(
     name="vault-psycopg2",
     version="0.1.0",
     packages=["vault_psycopg2"],
-    classifiers=[],
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
     url="https://github.com/niranjan94/vault-psycopg2",
     author="Niranjan Rajendran (@niranjan94)",
     author_email="me@niranjan.io",
