@@ -1,4 +1,4 @@
-[![PyPI version](https://badge.fury.io/py/vault-psycopg2.svg)](https://badge.fury.io/py/vault-psycopg2)
+[![Build Status](https://travis-ci.com/niranjan94/vault-psycopg2.svg?branch=master)](https://travis-ci.com/niranjan94/vault-psycopg2) [![PyPI version](https://badge.fury.io/py/vault-psycopg2.svg)](https://badge.fury.io/py/vault-psycopg2)
 
 ### vault-psycopg2
 
