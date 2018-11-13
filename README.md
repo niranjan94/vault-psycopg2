@@ -1,10 +1,11 @@
+[![PyPI version](https://badge.fury.io/py/vault-psycopg2.svg)](https://badge.fury.io/py/vault-psycopg2)
+
 ### vault-psycopg2
 
 > Helper classes to integrate psycopg2 with Vault
 
-**Note:** WIP. Ugly code. May or may not work.
 
-##### Usage:
+#### Usage:
 
 
 ```bash
@@ -27,7 +28,7 @@ vp = VaultPsycopg(
     }
 )
 
-# An instance of psycopg2.connection that is properly authenticated
+# An instance of psycopg2.Connection that is properly authenticated
 vp.connection
 ```
 
