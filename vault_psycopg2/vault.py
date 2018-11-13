@@ -46,7 +46,9 @@ class Vault:
         if self.connection_mode == 'token':
             client.token = self.parameters['token']
         elif self.connection_mode == 'ec2':
-            contents = urllib.request.urlopen('http://169.254.169.254/latest/dynamic/instance-identity/pkcs7').read() \
+            contents = urllib.request.urlopen('http://169.254.169.254/latest/dynamic/instance-identity/pkcs7')\
+                .read() \
+                .decode('utf-8') \
                 .replace('\n', '')
             client.auth_ec2(contents, nonce=self.parameters['nonce'], role=self.parameters['role'], mount_point='aws')
         else:
