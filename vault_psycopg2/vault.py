@@ -32,14 +32,15 @@ class Vault:
 
     @property
     def client(self):
-        if self._client.is_authenticated():
-            return self._client
-        elif self._client is not None:
-            # noinspection PyBroadException
-            try:
-                self._client.close()
-            except:
-                pass
+        if self._client is not None:
+            if self._client.is_authenticated():
+                return self._client
+            else:
+                # noinspection PyBroadException
+                try:
+                    self._client.close()
+                except:
+                    pass
 
         client = hvac.Client(url=self.vault_server)
         if self.connection_mode == 'token':
