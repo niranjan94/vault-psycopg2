@@ -22,7 +22,7 @@ class VaultPsycopg:
                 cursor = self._database_connection.cursor()
                 cursor.execute('SELECT 1')
                 return self._database_connection
-            except psycopg2.OperationalError:
+            except psycopg2.Error:
                 pass
 
         if self._vault_wrapper and self.database_config.get('role') is not None:
