@@ -16,11 +16,12 @@ class Vault:
 
     parameters = {}
 
-    def __new__(cls, **kwargs):
+    @classmethod
+    def instance(cls, **kwargs):
         if Vault._instance is None:
             with Vault._lock:
                 if Vault._instance is None:
-                    Vault._instance = super(Vault, cls).__new__(cls, **kwargs)
+                    Vault._instance = Vault(**kwargs)
         return Vault._instance
 
     def __init__(self, server=default_vault_address, connection_mode='token', client=None, **kwargs):

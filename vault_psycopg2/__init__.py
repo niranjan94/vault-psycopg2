@@ -13,7 +13,7 @@ class VaultPsycopg:
         self.database_config = database_config
         if vault_config:
             from vault_psycopg2.vault import Vault
-            self._vault_wrapper = Vault(**vault_config)
+            self._vault_wrapper = Vault.instance(**vault_config)
 
     @property
     def connection(self):
