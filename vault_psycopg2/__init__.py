@@ -20,7 +20,7 @@ class VaultPsycopg:
 
     @property
     def credentials(self):
-        self.connection()
+        _ = self.connection
         return {
             "username": self.__username,
             "password": self.__password
