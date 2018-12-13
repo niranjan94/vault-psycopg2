@@ -5,6 +5,9 @@ class VaultPsycopg:
     _vault_wrapper = None
     _database_connection = None
 
+    __username = None
+    __password = None
+
     database_config = {}
     vault_config = {}
 
@@ -14,6 +17,14 @@ class VaultPsycopg:
         if vault_config:
             from vault_psycopg2.vault import Vault
             self._vault_wrapper = Vault.instance(**vault_config)
+
+    @property
+    def credentials(self):
+        self.connection()
+        return {
+            "username": self.__username,
+            "password": self.__password
+        }
 
     @property
     def connection(self):
@@ -27,18 +38,18 @@ class VaultPsycopg:
 
         if self._vault_wrapper and self.database_config.get('role') is not None:
             credentials = self._vault_wrapper.client.read('database/creds/' + self.database_config.get('role'))
-            user = credentials['data']['username']
-            password = credentials['data']['password']
+            __username = credentials['data']['username']
+            __password = credentials['data']['password']
         else:
-            user = self.database_config.get('user')
-            password = self.database_config.get('password')
+            __username = self.database_config.get('user')
+            __password = self.database_config.get('password')
 
         self._database_connection = psycopg2.connect(
             host=self.database_config.get('host'),
             port=self.database_config.get('port'),
             dbname=self.database_config.get('dbname'),
-            user=user,
-            password=password,
+            user=__username,
+            password=__password,
         )
 
         return self._database_connection
