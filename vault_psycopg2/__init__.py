@@ -38,18 +38,18 @@ class VaultPsycopg:
 
         if self._vault_wrapper and self.database_config.get('role') is not None:
             credentials = self._vault_wrapper.client.read('database/creds/' + self.database_config.get('role'))
-            __username = credentials['data']['username']
-            __password = credentials['data']['password']
+            self.__username = credentials['data']['username']
+            self.__password = credentials['data']['password']
         else:
-            __username = self.database_config.get('user')
-            __password = self.database_config.get('password')
+            self.__username = self.database_config.get('user')
+            self.__password = self.database_config.get('password')
 
         self._database_connection = psycopg2.connect(
             host=self.database_config.get('host'),
             port=self.database_config.get('port'),
             dbname=self.database_config.get('dbname'),
-            user=__username,
-            password=__password,
+            user=self.__username,
+            password=self.__password,
         )
 
         return self._database_connection
