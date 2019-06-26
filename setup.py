@@ -13,7 +13,7 @@ except IOError:
 
 setup(
     name="vault-psycopg2",
-    version="0.1.10",
+    version="0.1.11",
     packages=["vault_psycopg2"],
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -30,6 +30,6 @@ setup(
     long_description_content_type='text/markdown',
     install_requires=[
         "hvac>=0.3.0",
-        "psycopg2>=2.0.0",
+        "psycopg2-binary>=2.0.0",
     ],
 )
